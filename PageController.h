@@ -2,6 +2,7 @@
 
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <RtcDS3231.h>
 
 #include "event.h"
 #include "Pump.h"
@@ -29,7 +30,7 @@ const char     current[] PROGMEM = "Current:";
 
 class PageController {
 public:
-  PageController(Adafruit_SSD1306 *display, getData_cb getData);
+  PageController(RtcDS3231 *rtc, getData_cb getData);
   void drawCurrentPage();
   void drawNextPage();
   void drawResetWindow(int num);
@@ -38,6 +39,8 @@ public:
   
 private:
   Adafruit_SSD1306 *display;
+  RtcDS3231 *Rtc;
+
   getData_cb getData;
 
   void drawPage1();

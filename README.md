@@ -10,7 +10,7 @@ This is a little Arduino project for controlling bilge pumps. Currently it suppo
 - [x] Trigger buzzer when either pump is running
 - [x] Silenceable buzzer
 - [x] Stats can be reset
-- [ ] RTC support
+- [-] RTC support
 - [ ] Pump control
 - [ ] Print runtime stats in 00m00s format
 - [ ] Reset stats individually

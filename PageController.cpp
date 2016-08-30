@@ -3,17 +3,29 @@
 
 #include "PageController.h"
 
-PageController::PageController(Adafruit_SSD1306 *display, getData_cb getData)
+void fmtDateTime(const RtcDateTime& dt, char &buf, int buflen)
+{
+  snprintf_P(&buf, buflen,
+  PSTR("%04u-%02u-%02u %02u:%02u:%02u"),
+  dt.Year(), dt.Month(), dt.Day(),
+  dt.Hour(), dt.Minute(), dt.Second());
+}
+
+PageController::PageController(RtcDS3231 *rtc, getData_cb getData)
 {
   // initialize with the I2C addr 0x3C and generate
   // HV for display internally.
+
+  display = new Adafruit_SSD1306(-1);
+
   display->begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display->clearDisplay();
   display->setTextSize(1);
   display->setTextColor(WHITE);
   display->setRotation(2);
 
-  this->display = display;
+  this->Rtc = rtc;
+
   this->getData = getData;
   this->currentPage = 1;
 }
@@ -92,17 +104,27 @@ void PageController::drawPage1()
 
 void PageController::drawPage2()
 {
+  char datestring[20];
+
   currentPage = 2;
-  display->clearDisplay();;
+
+  Rtc->IsDateTimeValid();
+  RtcDateTime dt = Rtc->GetDateTime();
+  fmtDateTime(dt, *datestring, 20);
+
+  display->clearDisplay();
 
   drawTitle(page2_title);
   drawMenu(reset, next);
 
-  display->setCursor(getCol(2), getRow(1));
-  display->println(F("11/12/13 14:15:16"));
+  display->setCursor(getCol(1), getRow(1));
+  display->println(datestring);
 
-  display->setCursor(getCol(2), getRow(3));
-  display->println(F("11/12/13 14:15:16"));
+  display->setCursor(getCol(1), getRow(2));
+  display->println(F("2013-12-11 10:09:08"));
+
+  display->setCursor(getCol(1), getRow(3));
+  display->println(F("2006-05-04 03:02:01"));
 
   display->display();
 }
