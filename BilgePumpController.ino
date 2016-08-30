@@ -116,7 +116,7 @@ void handleButton1(Event *e) {
 }
 
 void handleButton2(Event *e) {
-  if(e->type == UP) {
+  if(e->type == DOWN) {
     pc->drawNextPage();
   }
 }

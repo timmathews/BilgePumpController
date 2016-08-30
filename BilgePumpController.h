@@ -8,14 +8,14 @@
 typedef void (*page_cb)();
 
 // Configure pins
-const int ledPin = 13;
+const int ledPin         = 13;
 const int pumpSensor1Pin = 12;
 const int pumpSensor2Pin = 11;
-const int button1Pin = 10;
-const int button2Pin = 9;
-const int buzzerPin = 6;
+const int button1Pin     = 10;
+const int button2Pin     =  9;
+const int buzzerPin      =  8;
 
-const int resetDelay = 3; // seconds
+const int resetDelay     =  3; // seconds
 const long debounceDelay = 50; // milliseconds
 
 bool isBuzzing = false;
